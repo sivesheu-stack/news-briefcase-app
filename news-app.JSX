@@ -92,44 +92,203 @@ function tileColor(i) {
 }
 
 // ─── ANTHROPIC API ─────────────────────────────────────────────────────────────
+
+// ---- helpers ----
+function cleanJSON(raw) {
+    try {
+        const txt = raw.replace(/```json|```/g, "").trim();
+        return JSON.parse(txt.slice(txt.indexOf("{")));
+    } catch {
+        return null;
+    }
+}
+
+async function withRetry(fn, retries = 2) {
+    for (let i = 0; i <= retries; i++) {
+        try {
+            return await fn();
+        } catch (e) {
+            if (i === retries) throw e;
+        }
+    }
+}
+
+// ---- core call ----
 async function callClaude(prompt, sys = "") {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: sys, messages: [{ role: "user", content: prompt }] }),
+        body: JSON.stringify({
+            model: "claude-sonnet-4-20250514",
+            max_tokens: 1200,
+            system: sys,
+            messages: [{ role: "user", content: prompt }]
+        }),
     });
+
     const d = await res.json();
     return d.content?.find(b => b.type === "text")?.text || "";
 }
 
-async function generateSummary(articles, level, interests) {
-    const li = { beginner: "Explain all jargon simply. Assume zero prior knowledge.", intermediate: "Define complex terms briefly in parentheses.", advanced: "Full terminology. Focus on analysis and implications." };
-    const txt = articles.map(a => `Source: ${a.source}\nTitle: ${a.title}\nDesc: ${a.desc}`).join("\n\n---\n\n");
-    try {
-        const raw = await callClaude(
-            `You are a professional financial news editor. Level: ${level}. ${li[level]}\nInterests: ${interests.join(", ")}\nSummarise these articles as JSON (no markdown):\n{"sections":[{"category":"string","stories":[{"title":"string","summary":"string","implication":"string","jargon":[{"term":"string","definition":"string"}],"source":"string","link":"string","date":"string"}]}]}\nOnly use provided facts.\n\n${txt}`,
-            "Return only raw JSON, no markdown."
-        );
-        const clean = raw.replace(/```json|```/g, "").trim();
-        return JSON.parse(clean.slice(clean.indexOf("{")));
-    } catch { return null; }
-}
-
-async function generateQuiz(txt, level) {
-    try {
-        const raw = await callClaude(
-            `Generate 5 multiple-choice quiz questions for a ${level} reader based on this news.\nReturn ONLY raw JSON (no markdown):\n[{"q":"string","opts":["A","B","C","D"],"ans":0,"explanation":"string"}]\n\n${txt}`,
-            "Return only raw JSON arrays, no markdown."
-        );
-        return JSON.parse(raw.replace(/```json|```/g, "").trim());
-    } catch {
-        return [
-            { q: "What is the repo rate?", opts: ["Rate banks charge customers", "Rate RBI lends to banks", "Rate of inflation", "Exchange rate"], ans: 1, explanation: "The repo rate is the rate at which the RBI lends to commercial banks." },
-            { q: "What does 'net buyers' mean for FIIs?", opts: ["Sold more than bought", "Bought more than sold", "Exited the market", "Paused trading"], ans: 1, explanation: "Net buyers means purchases exceeded sales." },
-        ];
+// ---- LEVEL INSTRUCTIONS ----
+function levelInstruction(level) {
+    if (level === "beginner") {
+        return `
+- Avoid unexplained jargon
+- Explain concepts simply using plain English
+- Implications should be intuitive and real-world
+`;
     }
+
+    if (level === "intermediate") {
+        return `
+- Define complex terms briefly in parentheses (max 12 words)
+- Keep explanations concise but informative
+`;
+    }
+
+    return `
+- Use full financial terminology
+- Focus on macro linkages and second-order effects
+- Do not explain basic concepts
+`;
 }
 
+// ---- SUMMARY GENERATION ----
+async function generateSummary(articles, level, interests) {
+    const txt = articles
+        .map(a => `Source: ${a.source}\nTitle: ${a.title}\nDesc: ${a.desc}`)
+        .join("\n\n---\n\n");
+
+    const prompt = `
+You are a senior financial analyst writing a high-signal daily briefing.
+
+Your job is NOT to summarise everything.
+Your job is to FILTER, PRIORITISE, and EXPLAIN what matters.
+
+LEVEL RULES:
+${levelInstruction(level)}
+
+TASK:
+
+1. SELECTION
+- Ignore low-signal or repetitive news
+- Prioritise:
+  - macroeconomic shifts
+  - policy changes
+  - capital flows
+  - major corporate developments
+- Maximum 6–8 stories total
+
+2. GROUPING
+- Group stories into logical categories
+
+3. FOR EACH STORY:
+- title: rewrite into a sharp, information-dense headline
+- summary: 2–3 sentences explaining what happened and why it matters
+- implication:
+  - Must answer: "What should an informed investor infer?"
+  - Be specific (rates, liquidity, sectors, risk)
+  - Avoid generic statements
+
+4. JARGON
+- Include only if not advanced
+- Max 2–3 terms per story
+
+5. HARD CONSTRAINTS
+- DO NOT invent facts
+- DO NOT use outside knowledge
+- DO NOT repeat similar stories
+- DO NOT output generic implications
+
+6. OUTPUT STRICT JSON:
+{
+  "sections": [
+    {
+      "category": "string",
+      "stories": [
+        {
+          "title": "string",
+          "summary": "string",
+          "implication": "string",
+          "jargon": [
+            { "term": "string", "definition": "string" }
+          ],
+          "source": "string",
+          "link": "string",
+          "date": "string"
+        }
+      ]
+    }
+  ]
+}
+
+If input is insufficient, return:
+{"sections":[]}
+
+INTERESTS: ${interests.join(", ")}
+
+ARTICLES:
+${txt}
+`;
+
+    return withRetry(async () => {
+        const raw = await callClaude(prompt, "Return only raw JSON.");
+        const parsed = cleanJSON(raw);
+
+        if (!parsed || !parsed.sections) {
+            throw new Error("Invalid LLM output");
+        }
+
+        return parsed;
+    });
+}
+
+// ---- QUIZ GENERATION ----
+async function generateQuiz(txt, level) {
+    const prompt = `
+You are designing a financial comprehension test.
+
+LEVEL: ${level}
+
+TASK:
+Generate 5 multiple-choice questions that test:
+- understanding of events
+- cause-effect relationships
+- implications
+
+RULES:
+- Avoid trivial recall questions
+- Each question must require reasoning
+- 4 options per question
+- Only one correct answer
+- Include explanation
+
+OUTPUT STRICT JSON:
+[
+  {
+    "q": "string",
+    "opts": ["A","B","C","D"],
+    "ans": 0,
+    "explanation": "string"
+  }
+]
+
+CONTENT:
+${txt}
+`;
+
+    return withRetry(async () => {
+        const raw = await callClaude(prompt, "Return only raw JSON array.");
+        const parsed = cleanJSON(raw);
+
+        if (!Array.isArray(parsed)) {
+            throw new Error("Invalid quiz output");
+        }
+
+        return parsed;
+    });
+}
 // ─── GLOBAL STYLES ─────────────────────────────────────────────────────────────
 function GlobalStyles() {
     return (
