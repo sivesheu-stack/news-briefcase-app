@@ -1,0 +1,88 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 1rem;
+}
+
+.modal {
+    background: var(--bg-1);
+    border: 1px solid var(--bd-2);
+    border-radius: var(--r-xl);
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 480px;
+}
+
+.title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 130px;
+    background: var(--bg-2);
+    border: 1px solid var(--bd-2);
+    border-radius: var(--r-md);
+    padding: 10px 13px;
+    font-size: 14px;
+    color: var(--tx);
+    line-height: 1.7;
+    outline: none;
+    font-family: var(--sans);
+    transition: border-color var(--t);
+}
+
+.textarea:focus {
+    border-color: var(--bd-3);
+}
+
+.moodRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.moodLabel {
+    font-size: 12px;
+    color: var(--tx-3);
+    white-space: nowrap;
+}
+
+.moods {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.moodBtn {
+    font-size: 18px;
+    padding: 4px 6px;
+    border-radius: var(--r-md);
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    transition: all var(--t);
+    line-height: 1;
+}
+
+.moodActive {
+    border-color: var(--bd-3);
+    background: var(--bg-3);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 1rem;
+}

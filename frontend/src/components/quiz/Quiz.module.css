@@ -1,0 +1,46 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.heading {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.counter {
+    font-size: 12px;
+    background: var(--bg-1);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-full);
+    padding: 4px 12px;
+    color: var(--tx-3);
+}
+
+.progressTrack {
+    height: 3px;
+    background: var(--bg-3);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--red);
+    border-radius: 2px;
+    transition: width 0.35s ease;
+}
+
+.nextRow {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+.nextRow button {
+    min-width: 160px;
+}

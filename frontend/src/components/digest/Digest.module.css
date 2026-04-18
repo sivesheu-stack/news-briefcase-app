@@ -1,0 +1,27 @@
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.heading {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.sub {
+    font-size: 13px;
+    color: var(--tx-3);
+    margin-top: 3px;
+}
+
+.headerActions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}

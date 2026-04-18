@@ -1,0 +1,132 @@
+.card {
+    margin-bottom: 10px;
+}
+
+/* header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.left {
+    flex: 1;
+}
+
+.chevron {
+    font-size: 14px;
+    color: var(--tx-4);
+    flex-shrink: 0;
+    padding-top: 4px;
+    user-select: none;
+}
+
+.title {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 6px 0;
+    color: var(--tx);
+}
+
+.summary {
+    font-size: 13.5px;
+    color: var(--tx-2);
+    line-height: 1.7;
+}
+
+/* expanded section */
+.expanded {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--bd);
+}
+
+/* implication box */
+.implBox {
+    background: var(--red-dim);
+    border: 1px solid var(--red-border);
+    border-radius: var(--r-md);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+}
+
+.implLabel {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 5px;
+}
+
+.implText {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #ddd;
+}
+
+/* jargon box */
+.jargonBox {
+    background: var(--bg-2);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-md);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+}
+
+.jargonLabel {
+    color: var(--tx-3) !important;
+}
+
+.jargonLine {
+    font-size: 13px;
+    margin-bottom: 5px;
+    line-height: 1.55;
+}
+
+.term {
+    color: var(--tx-2);
+    font-weight: 600;
+}
+
+.def {
+    color: var(--tx-3);
+}
+
+/* refs */
+.refs {
+    margin-top: 6px;
+}
+
+.refsLabel {
+    color: var(--tx-4) !important;
+}
+
+.link {
+    font-size: 12px;
+    color: var(--red);
+    display: block;
+    margin-top: 4px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.sourceText {
+    font-size: 12px;
+    color: var(--tx-3);
+}
+
+/* footer */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--tx-4);
+}

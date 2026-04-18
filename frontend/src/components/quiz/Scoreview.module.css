@@ -1,0 +1,118 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    gap: 0;
+}
+
+/* score ring */
+.ring {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    border: 3px solid var(--red);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1;
+}
+
+.den {
+    font-size: 12px;
+    color: var(--tx-3);
+    margin-top: 2px;
+}
+
+.verdict {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.sub {
+    font-size: 14px;
+    color: var(--tx-3);
+    margin-bottom: 1.5rem;
+}
+
+/* streak */
+.streakBox {
+    background: var(--bg-1);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-lg);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    min-width: 220px;
+}
+
+.streakNum {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--red);
+}
+
+.streakLabel {
+    font-size: 13px;
+    color: var(--tx-3);
+    margin-top: 4px;
+}
+
+/* leaderboard */
+.board {
+    width: 100%;
+    max-width: 360px;
+    margin-bottom: 2rem;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--bd);
+    font-size: 14px;
+    color: var(--tx-3);
+}
+
+.you {
+    color: var(--tx);
+    font-weight: 600;
+}
+
+.rank {
+    width: 20px;
+    font-size: 13px;
+}
+
+.rankFirst {
+    color: var(--red);
+}
+
+.name {
+    flex: 1;
+}
+
+.entryStreak {
+    font-size: 13px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+}

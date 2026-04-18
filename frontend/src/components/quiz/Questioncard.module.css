@@ -1,0 +1,92 @@
+.card {
+    background: var(--bg-1);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-lg);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.question {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    color: var(--tx);
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: var(--r-md);
+    text-align: left;
+    font-size: 14px;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: all var(--t);
+    width: 100%;
+    border: 1px solid var(--bd-2);
+    background: transparent;
+    color: var(--tx-2);
+}
+
+.opt:not(:disabled):hover {
+    border-color: var(--bd-3);
+    color: var(--tx);
+}
+
+/* answer states */
+.correct {
+    background: var(--green-dim) !important;
+    border-color: var(--green-bd) !important;
+    color: var(--green) !important;
+    cursor: default;
+}
+
+.wrong {
+    background: var(--red-dim) !important;
+    border-color: var(--red) !important;
+    color: var(--red) !important;
+    cursor: default;
+}
+
+.idle:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.letter {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.explanation {
+    margin-top: 12px;
+    background: var(--bg-2);
+    border-radius: var(--r-md);
+    padding: 10px 13px;
+    font-size: 13px;
+    color: var(--tx-3);
+    line-height: 1.65;
+}
+
+.why {
+    font-weight: 700;
+    color: var(--red);
+}

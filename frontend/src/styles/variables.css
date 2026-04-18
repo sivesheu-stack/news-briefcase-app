@@ -1,0 +1,40 @@
+:root {
+    /* Colours */
+    --red: #e94560;
+    --red-dim: rgba(233, 69, 96, 0.08);
+    --red-border: rgba(233, 69, 96, 0.18);
+    --green: #52b788;
+    --green-dim: rgba(82, 183, 136, 0.1);
+    --green-bd: #52b788;
+
+    /* Backgrounds */
+    --bg: #080808;
+    --bg-1: #0a0a0a;
+    --bg-2: #0d0d0d;
+    --bg-3: #111111;
+
+    /* Borders */
+    --bd: #161616;
+    --bd-2: #1e1e1e;
+    --bd-3: #2a2a2a;
+
+    /* Text */
+    --tx: #e0e0e0;
+    --tx-2: #999999;
+    --tx-3: #555555;
+    --tx-4: #333333;
+
+    /* Typography */
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+
+    /* Radii */
+    --r-sm: 6px;
+    --r-md: 8px;
+    --r-lg: 12px;
+    --r-xl: 16px;
+    --r-full: 9999px;
+
+    /* Transitions */
+    --t: 0.15s ease;
+}
