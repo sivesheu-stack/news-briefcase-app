@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function generateQuiz(text, level) {
     const prompt = `
-Generate 15 MCQs based on this:
+Generate 10 MCQs based on this:
 ${text}
 
 Return JSON:
