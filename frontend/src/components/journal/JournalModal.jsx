@@ -1,6 +1,6 @@
 // components/journal/JournalModal.jsx
 import { useState } from "react";
-import { MOODS } from "../../utils/constants.js";
+import { MOODS } from "../../utils/constant.js";
 import Button from "../common/Button.jsx";
 import s from "./JournalModal.module.css";
 

@@ -1,7 +1,7 @@
 // components/settings/Settings.jsx
 import { useState } from "react";
 import { api } from "../../api/api.js";
-import { INTERESTS, LEVELS, LEVEL_DESCRIPTIONS } from "../../utils/constants.js";
+import { INTERESTS, LEVELS, LEVEL_DESCRIPTIONS } from "../../utils/constant.js";
 import Input from "../common/Input.jsx";
 import Button from "../common/Button.jsx";
 import s from "./Settings.module.css";

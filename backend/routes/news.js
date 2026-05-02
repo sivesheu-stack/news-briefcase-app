@@ -1,33 +1,33 @@
 // routes/news.js
-import express from "express";
-import { fetchRSS } from "../services/rssService.js";
-import { generateSummary } from "../services/aiService.js";
-import { generateQuiz } from "../services/quizService.js";
-import { dedupeArticles } from "../utils/dedupe.js";
+import { Router } from "express";
+import {
+    getPrefs, savePrefs, updatePrefs,
+    getDigest,
+    getQuiz, submitScore, getLeaderboardHandler,
+    getJournal, createJournalEntry, deleteJournalEntry,
+} from "../controllers/newsController.js";
 
-const router = express.Router();
+const router = Router();
 
-const SOURCES = [
-    "https://www.business-standard.com/rss/markets-106.rss",
-    "https://livemint.com/rss/markets",
-];
+// ── Health (also on router level for safety) ──────────────────────────────────
+router.get("/health", (_req, res) => res.json({ status: "ok" }));
 
-router.get("/digest", async (req, res) => {
-    const { level = "intermediate" } = req.query;
+// ── Preferences ───────────────────────────────────────────────────────────────
+router.get("/prefs", getPrefs);
+router.post("/prefs", savePrefs);
+router.put("/prefs", updatePrefs);
 
-    const results = await Promise.all(SOURCES.map(fetchRSS));
-    const articles = dedupeArticles(results.flat()).slice(0, 25);
+// ── Digest ────────────────────────────────────────────────────────────────────
+router.get("/digest", getDigest);
 
-    const summary = await generateSummary(articles, level, []);
+// ── Quiz ──────────────────────────────────────────────────────────────────────
+router.get("/quiz", getQuiz);
+router.post("/quiz/submit", submitScore);
+router.get("/quiz/leaderboard", getLeaderboardHandler);
 
-    res.json({ articles, summary });
-});
-
-router.post("/quiz", async (req, res) => {
-    const { text, level } = req.body;
-
-    const quiz = await generateQuiz(text, level);
-    res.json(quiz);
-});
+// ── Journal ───────────────────────────────────────────────────────────────────
+router.get("/journal", getJournal);
+router.post("/journal", createJournalEntry);
+router.delete("/journal/:id", deleteJournalEntry);
 
 export default router;

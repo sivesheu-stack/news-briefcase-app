@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
-import { api } from "./utils/api.js";
-import Nav from "./components/Nav.jsx";
-import Onboarding from "./pages/Onboarding.jsx";
-import Digest from "./pages/Digest.jsx";
-import Quiz from "./pages/Quiz.jsx";
-import Journal from "./pages/Journal.jsx";
-import Settings from "./pages/Settings.jsx";
+import { api } from "./api/api.js";
+import Nav from "./components/common/Navbar.jsx";
+import Onboarding from "./components/onboarding/Onboarding.jsx";
+import Digest from "./components/digest/Digest.jsx";
+import Quiz from "./components/quiz/Quiz.jsx";
+import Journal from "./components/journal/Journal.jsx";
+import Settings from "./components/settings/Settings.jsx";
 
 export default function App() {
     const [prefs, setPrefs] = useState(undefined); // undefined = loading
@@ -43,7 +43,6 @@ export default function App() {
         );
     }
 
-    // New user — show onboarding, block all other routes
     if (!prefs) {
         return (
             <div style={{ background: "#080808", minHeight: "100vh" }}>

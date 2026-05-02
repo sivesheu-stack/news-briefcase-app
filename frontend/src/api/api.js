@@ -1,5 +1,5 @@
 // src/api/api.js
-const BASE = import.meta.env.VITE_API_BASE ?? "/api";
+const BASE = import.meta.env.VITE_API_BASE ?? "http://10.210.2.14:5000/api";
 
 async function request(method, path, body) {
     const opts = { method, headers: { "Content-Type": "application/json" } };

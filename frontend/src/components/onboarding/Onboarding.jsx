@@ -1,7 +1,7 @@
 // components/onboarding/Onboarding.jsx
 import { useState } from "react";
 import { api } from "../../api/api.js";
-import { INTERESTS, LEVELS, LEVEL_DESCRIPTIONS } from "../../utils/constants.js";
+import { INTERESTS, LEVELS, LEVEL_DESCRIPTIONS } from "../../utils/constant.js";
 import Input from "../common/Input.jsx";
 import Button from "../common/Button.jsx";
 import s from "./Onboarding.module.css";

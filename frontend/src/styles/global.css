@@ -50,6 +50,34 @@ select {
     color: var(--tx-3);
 }
 
+/* ── Chip buttons (interest selector) ──────────────────────────────────────── */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--bd-2);
+    border-radius: var(--r-full);
+    cursor: pointer;
+    background: transparent;
+    color: var(--tx-2);
+    transition: all var(--t);
+    white-space: nowrap;
+}
+
+.chip:hover {
+    border-color: var(--bd-3);
+    color: var(--tx);
+}
+
+.chip.on {
+    background: var(--bg-2);
+    border-color: var(--red);
+    color: var(--tx);
+    font-weight: 600;
+}
+
 /* ── Spinner ────────────────────────────────────────────────────────────────── */
 .spinner {
     width: 24px;
